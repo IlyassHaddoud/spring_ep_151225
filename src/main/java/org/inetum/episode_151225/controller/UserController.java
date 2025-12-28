@@ -2,6 +2,7 @@ package org.inetum.episode_151225.controller;
 
 import jakarta.validation.Valid;
 import org.inetum.episode_151225.dto.UserRequest;
+import org.inetum.episode_151225.dto.UserResponse;
 import org.inetum.episode_151225.model.User;
 import org.inetum.episode_151225.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -22,9 +23,14 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers()
+    public ResponseEntity<List<UserResponse>> getAllUsers()
     {
-        return this.userService.getAllUsers();
+        List<UserResponse> users = this.userService.getAllUsers();
+        if(users.isEmpty())
+        {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(users);
     }
 
     @PostMapping
