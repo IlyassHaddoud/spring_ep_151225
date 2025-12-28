@@ -1,5 +1,6 @@
 package org.inetum.episode_151225.service;
 
+import org.inetum.episode_151225.dto.UserRequest;
 import org.inetum.episode_151225.model.User;
 import org.inetum.episode_151225.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,11 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
-    public User addUser(User user)
+    public User addUser(UserRequest user)
     {
-        return this.userRepository.save(user);
+        User u = new User();
+        u.setEmail(user.getMail());
+        u.setName(user.getName());
+        return this.userRepository.save(u);
     }
 }

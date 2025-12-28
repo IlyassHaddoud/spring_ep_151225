@@ -1,7 +1,12 @@
 package org.inetum.episode_151225.controller;
 
+import jakarta.validation.Valid;
+import org.inetum.episode_151225.dto.UserRequest;
 import org.inetum.episode_151225.model.User;
 import org.inetum.episode_151225.service.UserService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +28,12 @@ public class UserController {
     }
 
     @PostMapping
-    public User addUser(@RequestBody User user)
+    public ResponseEntity<User> addUser(@Valid @RequestBody UserRequest request)
     {
-        return this.userService.addUser(user);
+        User user = this.userService.addUser(request);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(user);
     }
 
 }
